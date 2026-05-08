@@ -2,14 +2,20 @@ package br.com.fiap3espv.challenge.controller;
 
 import br.com.fiap3espv.challenge.dto.ClienteCadastroDTO;
 import br.com.fiap3espv.challenge.dto.ClienteCadastroResponseDTO;
+import br.com.fiap3espv.challenge.dto.ClienteDetalhesDTO;
+import br.com.fiap3espv.challenge.dto.ClienteListagemDTO;
 import br.com.fiap3espv.challenge.model.Cliente;
 import br.com.fiap3espv.challenge.service.ClienteService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
 
 @RestController
 @RequestMapping("/api/v1/clientes")
@@ -25,5 +31,23 @@ public class ClienteController {
         ClienteCadastroResponseDTO responseDTO = new ClienteCadastroResponseDTO(cliente);
         var uri = uriBuilder.path("/api/v1/clientes").buildAndExpand(responseDTO.id()).toUri();
         return ResponseEntity.created(uri).body(responseDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ClienteListagemDTO>> listarClientesAtivos(@PageableDefault(sort = "nome") Pageable pageable) {
+        Page<ClienteListagemDTO> page = clienteService.listarClientesAtivos(pageable);
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/desativados")
+    public ResponseEntity<Page<ClienteListagemDTO>> listarClientesNaoAtivos(Pageable pageable) {
+        Page<ClienteListagemDTO> page = clienteService.listarClientesNaoAtivos(pageable);
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteDetalhesDTO> exibirDetalhesCliente(@PathVariable Long id) {
+        ClienteDetalhesDTO clienteDetalhesDTO = clienteService.exibirDetalhesCliente(id);
+        return ResponseEntity.ok().body(clienteDetalhesDTO);
     }
 }
