@@ -1,9 +1,6 @@
 package br.com.fiap3espv.challenge.controller;
 
-import br.com.fiap3espv.challenge.dto.ClienteCadastroDTO;
-import br.com.fiap3espv.challenge.dto.ClienteCadastroResponseDTO;
-import br.com.fiap3espv.challenge.dto.ClienteDetalhesDTO;
-import br.com.fiap3espv.challenge.dto.ClienteListagemDTO;
+import br.com.fiap3espv.challenge.dto.*;
 import br.com.fiap3espv.challenge.model.Cliente;
 import br.com.fiap3espv.challenge.service.ClienteService;
 import jakarta.transaction.Transactional;
@@ -49,5 +46,12 @@ public class ClienteController {
     public ResponseEntity<ClienteDetalhesDTO> exibirDetalhesCliente(@PathVariable Long id) {
         ClienteDetalhesDTO clienteDetalhesDTO = clienteService.exibirDetalhesCliente(id);
         return ResponseEntity.ok().body(clienteDetalhesDTO);
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> atualizarDadosClientes(@RequestBody @Valid ClienteAtualizacaoDTO clienteAtualizacaoDTO, @PathVariable Long id) {
+        clienteService.atualizarDadosCliente(clienteAtualizacaoDTO, id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,5 +1,6 @@
 package br.com.fiap3espv.challenge.model;
 
+import br.com.fiap3espv.challenge.dto.ClienteAtualizacaoDTO;
 import br.com.fiap3espv.challenge.dto.ClienteCadastroDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,5 +31,32 @@ public class Cliente {
         this.email = clienteCadastroDTO.email();
         this.cidade = clienteCadastroDTO.cidade();
         this.estado = clienteCadastroDTO.estado();
+    }
+
+    public void atualizarDados(ClienteAtualizacaoDTO clienteAtualizacaoDTO) {
+
+        if (!clienteAtualizacaoDTO.nome().isEmpty()) {
+            this.nome = clienteAtualizacaoDTO.nome();
+        }
+
+        if (!clienteAtualizacaoDTO.cpf().isEmpty()) {
+            this.cpf = clienteAtualizacaoDTO.cpf();
+        }
+
+        if (!clienteAtualizacaoDTO.telefone().isEmpty()) {
+            this.telefone = clienteAtualizacaoDTO.telefone();
+        }
+
+        if (!clienteAtualizacaoDTO.email().isEmpty()) {
+            this.email = clienteAtualizacaoDTO.email();
+        }
+
+        if (!clienteAtualizacaoDTO.cidade().isEmpty()) {
+            this.cidade = clienteAtualizacaoDTO.cidade();
+        }
+
+        if (!clienteAtualizacaoDTO.estado().isEmpty()) {
+            this.estado = clienteAtualizacaoDTO.estado();
+        }
     }
 }
