@@ -59,4 +59,16 @@ public class Cliente {
             this.estado = clienteAtualizacaoDTO.estado();
         }
     }
+
+    public void ativarCliente() {
+        if (!ativo) {
+            this.ativo = true;
+        }
+    }
+
+    public void desativarCliente() {
+        if (ativo) {
+            this.ativo = false;
+        }
+    }
 }

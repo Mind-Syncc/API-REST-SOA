@@ -64,4 +64,28 @@ public class ClienteService {
         cliente.atualizarDados(clienteAtualizacaoDTO);
         clienteRepository.save(cliente);
     }
+
+    public void ativarCliente(Long id) {
+        Optional<Cliente> clienteOptional = clienteRepository.findById(id);
+
+        if (clienteOptional.isEmpty()) {
+            throw new RuntimeException("Não foi possível encontrar o recurso");
+        }
+
+        Cliente cliente = clienteOptional.get();
+        cliente.ativarCliente();
+        clienteRepository.save(cliente);
+    }
+
+    public void removerCliente(Long id) {
+        Optional<Cliente> clienteOptional = clienteRepository.findById(id);
+
+        if (clienteOptional.isEmpty()) {
+            throw new RuntimeException("Não foi possível encontrar o recurso");
+        }
+
+        Cliente cliente = clienteOptional.get();
+        cliente.desativarCliente();
+        clienteRepository.save(cliente);
+    }
 }

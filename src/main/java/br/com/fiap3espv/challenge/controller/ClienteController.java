@@ -54,4 +54,19 @@ public class ClienteController {
         clienteService.atualizarDadosCliente(clienteAtualizacaoDTO, id);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/ativacao/{id}")
+    @Transactional
+    public ResponseEntity<Void> ativarCliente(@PathVariable Long id) {
+        clienteService.ativarCliente(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> removerCliente(@PathVariable Long id) {
+        clienteService.removerCliente(id);
+        return ResponseEntity.noContent().build();
+    }
 }
