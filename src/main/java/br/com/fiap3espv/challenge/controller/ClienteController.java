@@ -1,6 +1,6 @@
 package br.com.fiap3espv.challenge.controller;
 
-import br.com.fiap3espv.challenge.dto.*;
+import br.com.fiap3espv.challenge.dto.cliente.*;
 import br.com.fiap3espv.challenge.model.Cliente;
 import br.com.fiap3espv.challenge.service.ClienteService;
 import jakarta.transaction.Transactional;
@@ -24,10 +24,9 @@ public class ClienteController {
     @Transactional
     public ResponseEntity<ClienteCadastroResponseDTO> adicionarCliente(@RequestBody @Valid ClienteCadastroDTO clienteCadastroDTO,
                                                                        UriComponentsBuilder uriBuilder) {
-        Cliente cliente = clienteService.cadastrarCliente(clienteCadastroDTO);
-        ClienteCadastroResponseDTO responseDTO = new ClienteCadastroResponseDTO(cliente);
-        var uri = uriBuilder.path("/api/v1/clientes").buildAndExpand(responseDTO.id()).toUri();
-        return ResponseEntity.created(uri).body(responseDTO);
+        ClienteCadastroResponseDTO response = clienteService.cadastrarCliente(clienteCadastroDTO);
+        var uri = uriBuilder.path("/api/v1/clientes").buildAndExpand(response.id()).toUri();
+        return ResponseEntity.created(uri).body(response);
     }
 
     @GetMapping

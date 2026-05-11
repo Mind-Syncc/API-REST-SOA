@@ -1,4 +1,4 @@
-package br.com.fiap3espv.challenge.dto;
+package br.com.fiap3espv.challenge.dto.cliente;
 
 import br.com.fiap3espv.challenge.model.Cliente;
 

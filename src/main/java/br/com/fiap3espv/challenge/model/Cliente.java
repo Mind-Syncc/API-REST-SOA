@@ -1,7 +1,7 @@
 package br.com.fiap3espv.challenge.model;
 
-import br.com.fiap3espv.challenge.dto.ClienteAtualizacaoDTO;
-import br.com.fiap3espv.challenge.dto.ClienteCadastroDTO;
+import br.com.fiap3espv.challenge.dto.cliente.ClienteAtualizacaoDTO;
+import br.com.fiap3espv.challenge.dto.cliente.ClienteCadastroDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 

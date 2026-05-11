@@ -1,9 +1,11 @@
 package br.com.fiap3espv.challenge.model;
 
+import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoCadastroDTO;
 import br.com.fiap3espv.challenge.model.enums.CategoriaServico;
 import br.com.fiap3espv.challenge.model.enums.TipoFalha;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -16,6 +18,7 @@ public class OrdemServico {
     private Long id;
 
     @ManyToOne
+    @Setter
     private Cliente cliente;
     private String concessionariaId;
     private LocalDate dataServico;
@@ -30,9 +33,23 @@ public class OrdemServico {
     private TipoFalha tipoFalha;
 
     private String descricaoProblema;
-    private Double valortotal;
+    private Double valorTotal;
+
+    private boolean ativo = true;
 
     public OrdemServico() {
 
     }
+
+    public OrdemServico(OrdemServicoCadastroDTO ordemServicoCadastroDTO) {
+        this.concessionariaId = ordemServicoCadastroDTO.concessionariaId();
+        this.dataServico = ordemServicoCadastroDTO.dataServico();
+        this.tipoServico = ordemServicoCadastroDTO.tipoServico();
+        this.veiculo = new Veiculo(ordemServicoCadastroDTO.veiculo());
+        this.categoriaServico = ordemServicoCadastroDTO.categoriaServico();
+        this.tipoFalha = ordemServicoCadastroDTO.tipoFalha();
+        this.descricaoProblema = ordemServicoCadastroDTO.descricaoProblema();
+        this.valorTotal = ordemServicoCadastroDTO.valorTotal();
+    }
+
 }
