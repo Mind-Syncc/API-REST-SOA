@@ -2,15 +2,17 @@ package br.com.fiap3espv.challenge.controller;
 
 import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoCadastroDTO;
 import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoCadastroResponseDTO;
+import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoDetalhamentoDTO;
+import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoListagemDTO;
 import br.com.fiap3espv.challenge.service.OrdemServicoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
@@ -27,5 +29,17 @@ public class OrdemServicoController {
         var uri = uriBuilder.path("/api/v1/ordens-servicos/{id}").buildAndExpand(response.id()).toUri();
 
         return ResponseEntity.created(uri).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<OrdemServicoListagemDTO>> listarOrdensDeServico(@PageableDefault(sort = "dataServico") Pageable pageable) {
+        Page<OrdemServicoListagemDTO> page = ordemServicoService.listarOrdensDeServico(pageable);
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrdemServicoDetalhamentoDTO> exibirOrdemDeServicoPorId(@PathVariable Long id) {
+        OrdemServicoDetalhamentoDTO ordemServicoDetalhamento = ordemServicoService.exibirOrdemDeServico(id);
+        return ResponseEntity.ok().body(ordemServicoDetalhamento);
     }
 }

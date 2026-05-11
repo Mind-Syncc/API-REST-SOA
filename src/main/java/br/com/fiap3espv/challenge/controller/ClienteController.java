@@ -1,7 +1,6 @@
 package br.com.fiap3espv.challenge.controller;
 
 import br.com.fiap3espv.challenge.dto.cliente.*;
-import br.com.fiap3espv.challenge.model.Cliente;
 import br.com.fiap3espv.challenge.service.ClienteService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
