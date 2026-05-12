@@ -40,4 +40,18 @@ public class OrdemServicoService {
                 .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
         return new OrdemServicoDetalhamentoDTO(ordemServico);
     }
+
+    public void ativarOrdemDeServico(Long id) {
+        OrdemServico ordemServico = ordemServicoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
+        ordemServico.ativarOrdemDeServico();
+        ordemServicoRepository.save(ordemServico);
+    }
+
+    public void removerOrdemDeServico(Long id) {
+        OrdemServico ordemServico = ordemServicoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
+        ordemServico.desativarOrdemDeServico();
+        ordemServicoRepository.save(ordemServico);
+    }
 }

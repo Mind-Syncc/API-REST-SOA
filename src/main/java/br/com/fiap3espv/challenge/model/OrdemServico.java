@@ -52,4 +52,15 @@ public class OrdemServico {
         this.valorTotal = ordemServicoCadastroDTO.valorTotal();
     }
 
+    public void ativarOrdemDeServico() {
+        if (!ativo) {
+            this.ativo = true;
+        }
+    }
+
+    public void desativarOrdemDeServico() {
+        if (ativo) {
+            this.ativo = false;
+        }
+    }
 }

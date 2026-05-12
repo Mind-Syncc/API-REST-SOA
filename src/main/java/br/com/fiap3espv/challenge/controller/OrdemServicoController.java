@@ -42,4 +42,16 @@ public class OrdemServicoController {
         OrdemServicoDetalhamentoDTO ordemServicoDetalhamento = ordemServicoService.exibirOrdemDeServico(id);
         return ResponseEntity.ok().body(ordemServicoDetalhamento);
     }
+
+    @PutMapping("/ativacao/{id}")
+    public ResponseEntity<Void> ativarOrdemDeServico(@PathVariable Long id) {
+        ordemServicoService.ativarOrdemDeServico(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removerUmaOrdemDeServico(@PathVariable Long id) {
+        ordemServicoService.removerOrdemDeServico(id);
+        return ResponseEntity.noContent().build();
+    }
 }
