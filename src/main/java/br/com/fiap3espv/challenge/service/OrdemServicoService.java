@@ -1,9 +1,6 @@
 package br.com.fiap3espv.challenge.service;
 
-import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoCadastroDTO;
-import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoCadastroResponseDTO;
-import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoDetalhamentoDTO;
-import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoListagemDTO;
+import br.com.fiap3espv.challenge.dto.ordemservico.*;
 import br.com.fiap3espv.challenge.model.Cliente;
 import br.com.fiap3espv.challenge.model.OrdemServico;
 import br.com.fiap3espv.challenge.repository.OrdemServicoRepository;
@@ -39,6 +36,12 @@ public class OrdemServicoService {
         OrdemServico ordemServico = ordemServicoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
         return new OrdemServicoDetalhamentoDTO(ordemServico);
+    }
+
+    public void atualizarOrdemDeServico(OrdemServicoAtualizacaoDTO ordemServicoAtualizacaoDTO, Long id) {
+        OrdemServico ordemServico = ordemServicoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
+        ordemServico.atualizarOrdemDeServico(ordemServicoAtualizacaoDTO);
+        ordemServicoRepository.save(ordemServico);
     }
 
     public void ativarOrdemDeServico(Long id) {

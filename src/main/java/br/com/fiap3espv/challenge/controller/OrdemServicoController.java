@@ -1,9 +1,6 @@
 package br.com.fiap3espv.challenge.controller;
 
-import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoCadastroDTO;
-import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoCadastroResponseDTO;
-import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoDetalhamentoDTO;
-import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoListagemDTO;
+import br.com.fiap3espv.challenge.dto.ordemservico.*;
 import br.com.fiap3espv.challenge.service.OrdemServicoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -41,6 +38,13 @@ public class OrdemServicoController {
     public ResponseEntity<OrdemServicoDetalhamentoDTO> exibirOrdemDeServicoPorId(@PathVariable Long id) {
         OrdemServicoDetalhamentoDTO ordemServicoDetalhamento = ordemServicoService.exibirOrdemDeServico(id);
         return ResponseEntity.ok().body(ordemServicoDetalhamento);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> alterarOrdemServico(@RequestBody @Valid OrdemServicoAtualizacaoDTO ordemServicoAtualizacaoDTO,
+                                                    @PathVariable Long id) {
+        ordemServicoService.atualizarOrdemDeServico(ordemServicoAtualizacaoDTO, id);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/ativacao/{id}")

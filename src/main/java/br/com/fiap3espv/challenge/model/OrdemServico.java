@@ -1,5 +1,6 @@
 package br.com.fiap3espv.challenge.model;
 
+import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoAtualizacaoDTO;
 import br.com.fiap3espv.challenge.dto.ordemservico.OrdemServicoCadastroDTO;
 import br.com.fiap3espv.challenge.model.enums.CategoriaServico;
 import br.com.fiap3espv.challenge.model.enums.TipoFalha;
@@ -50,6 +51,32 @@ public class OrdemServico {
         this.tipoFalha = ordemServicoCadastroDTO.tipoFalha();
         this.descricaoProblema = ordemServicoCadastroDTO.descricaoProblema();
         this.valorTotal = ordemServicoCadastroDTO.valorTotal();
+    }
+
+    public void atualizarOrdemDeServico(OrdemServicoAtualizacaoDTO ordemServicoAtualizacaoDTO) {
+        if (!ordemServicoAtualizacaoDTO.tipoServico().isEmpty()) {
+            this.tipoServico = ordemServicoAtualizacaoDTO.tipoServico();
+        }
+
+        if (ordemServicoAtualizacaoDTO.veiculo() != null) {
+            this.veiculo = new Veiculo(ordemServicoAtualizacaoDTO.veiculo());
+        }
+
+        if (ordemServicoAtualizacaoDTO.categoriaServico() != null) {
+            this.categoriaServico = ordemServicoAtualizacaoDTO.categoriaServico();
+        }
+
+        if (ordemServicoAtualizacaoDTO.tipoFalha() != null) {
+            this.tipoFalha = ordemServicoAtualizacaoDTO.tipoFalha();
+        }
+
+        if (!ordemServicoAtualizacaoDTO.descricaoProblema().isEmpty()) {
+            this.descricaoProblema = ordemServicoAtualizacaoDTO.descricaoProblema();
+        }
+
+        if (ordemServicoAtualizacaoDTO.valorTotal() != null) {
+            this.valorTotal = ordemServicoAtualizacaoDTO.valorTotal();
+        }
     }
 
     public void ativarOrdemDeServico() {
