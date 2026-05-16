@@ -1,6 +1,7 @@
 package br.com.fiap3espv.challenge.service;
 
 import br.com.fiap3espv.challenge.dto.ordemservico.*;
+import br.com.fiap3espv.challenge.exceptions.RecursoNaoEncontradoException;
 import br.com.fiap3espv.challenge.model.Cliente;
 import br.com.fiap3espv.challenge.model.OrdemServico;
 import br.com.fiap3espv.challenge.repository.OrdemServicoRepository;
@@ -33,28 +34,30 @@ public class OrdemServicoService {
     }
 
     public OrdemServicoDetalhamentoDTO exibirOrdemDeServico(Long id) {
-        OrdemServico ordemServico = ordemServicoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
+        OrdemServico ordemServico = procurarOrdemDeServicoPorId(id);
         return new OrdemServicoDetalhamentoDTO(ordemServico);
     }
 
     public void atualizarOrdemDeServico(OrdemServicoAtualizacaoDTO ordemServicoAtualizacaoDTO, Long id) {
-        OrdemServico ordemServico = ordemServicoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
+        OrdemServico ordemServico = procurarOrdemDeServicoPorId(id);
         ordemServico.atualizarOrdemDeServico(ordemServicoAtualizacaoDTO);
         ordemServicoRepository.save(ordemServico);
     }
 
     public void ativarOrdemDeServico(Long id) {
-        OrdemServico ordemServico = ordemServicoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
+        OrdemServico ordemServico = procurarOrdemDeServicoPorId(id);
         ordemServico.ativarOrdemDeServico();
         ordemServicoRepository.save(ordemServico);
     }
 
     public void removerOrdemDeServico(Long id) {
-        OrdemServico ordemServico = ordemServicoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
+        OrdemServico ordemServico = procurarOrdemDeServicoPorId(id);
         ordemServico.desativarOrdemDeServico();
         ordemServicoRepository.save(ordemServico);
+    }
+
+    public OrdemServico procurarOrdemDeServicoPorId(Long id) {
+        return ordemServicoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Ordem de serviço não encontrada"));
     }
 }

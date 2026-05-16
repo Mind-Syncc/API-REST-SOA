@@ -1,9 +1,10 @@
 package br.com.fiap3espv.challenge.service;
 
 import br.com.fiap3espv.challenge.dto.cliente.*;
+import br.com.fiap3espv.challenge.exceptions.CPFValidacaoException;
+import br.com.fiap3espv.challenge.exceptions.RecursoNaoEncontradoException;
 import br.com.fiap3espv.challenge.model.Cliente;
 import br.com.fiap3espv.challenge.repository.ClienteRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,7 +46,7 @@ public class ClienteService {
         Matcher matcher = pattern.matcher(clienteAtualizacaoDTO.cpf());
 
         if (!matcher.find()) {
-            throw new RuntimeException("CPF é inválido");
+            throw new CPFValidacaoException("CPF é inválido");
         }
 
         cliente.atualizarDados(clienteAtualizacaoDTO);
@@ -67,6 +68,6 @@ public class ClienteService {
     }
 
     public Cliente procurarClientePorId(Long id) {
-        return clienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+        return clienteRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Cliente não encontrado"));
     }
 }

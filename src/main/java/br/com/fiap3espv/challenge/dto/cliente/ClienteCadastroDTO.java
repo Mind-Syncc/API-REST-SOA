@@ -5,20 +5,20 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public record ClienteCadastroDTO (
-         @NotBlank (message = "O campo nome é obrigatório")
+         @NotBlank(message = "O campo nome precisa ser preenchido")
          String nome,
-         @NotBlank
+         @NotBlank(message = "O campo CPF precisa ser preenchido")
          @Pattern (
                  regexp = "^\\d{11}$",
-                 message = "CPF inválido"
+                 message = "O CPF precisa ser válido (possuir 11 digitos)"
          )
          String cpf,
          String telefone,
-         @NotBlank
-         @Email
+         @NotBlank(message = "O campo email precisa ser preenchido")
+         @Email(message = "O campo email precisa ser válido")
          String email,
-         @NotBlank
+         @NotBlank(message = "O campo cidade precisa ser preenchido")
          String cidade,
-         @NotBlank
+         @NotBlank(message = "O campo estado precisa ser preenchido")
          String estado) {
 }

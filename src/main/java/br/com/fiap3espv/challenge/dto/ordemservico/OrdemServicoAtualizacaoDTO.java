@@ -9,9 +9,13 @@ import jakarta.validation.constraints.NotNull;
 
 
 public record OrdemServicoAtualizacaoDTO(String tipoServico,
-                                         @NotNull @Valid VeiculoDTO veiculo,
-                                         @NotNull CategoriaServico categoriaServico,
-                                         @NotNull TipoFalha tipoFalha,
-                                         @NotBlank String descricaoProblema,
+                                         @NotNull(message = "O campo veiculo precisa ser preenchido")
+                                         @Valid VeiculoDTO veiculo,
+                                         @NotNull(message = "O campo categoriaServico precisa ser preenchido")
+                                         CategoriaServico categoriaServico,
+                                         @NotNull(message = "O campo tipoFalha precisa ser preenchido")
+                                         TipoFalha tipoFalha,
+                                         @NotBlank(message = "O campo descricaoProblema precisa ser preenchido")
+                                         String descricaoProblema,
                                          Double valorTotal) {
 }

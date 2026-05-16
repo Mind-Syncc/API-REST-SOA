@@ -6,7 +6,7 @@ public record ClienteAtualizacaoDTO (
          String nome,
          String cpf,
          String telefone,
-         @Email
+         @Email(message = "O campo email precisa ser válido")
          String email,
          String cidade,
          String estado) {

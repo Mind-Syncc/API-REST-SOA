@@ -8,11 +8,13 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-public record OrdemServicoCadastroDTO (@NotNull Long clienteId,
-                                       @NotNull String concessionariaId,
+public record OrdemServicoCadastroDTO (@NotNull(message = "O campo clienteId precisa ser preenchido") Long clienteId,
+                                       @NotNull(message = "O campo concessionariaId precisa ser preenchido")
+                                       String concessionariaId,
                                        LocalDate dataServico,
                                        String tipoServico,
-                                       @NotNull @Valid VeiculoDTO veiculo,
+                                       @NotNull(message = "O campo veiculo precisa ser preenchido")
+                                       @Valid VeiculoDTO veiculo,
                                        CategoriaServico categoriaServico,
                                        TipoFalha tipoFalha,
                                        String descricaoProblema,
