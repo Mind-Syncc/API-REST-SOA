@@ -6,12 +6,14 @@ import br.com.fiap3espv.challenge.model.Cliente;
 import br.com.fiap3espv.challenge.model.OrdemServico;
 import br.com.fiap3espv.challenge.repository.OrdemServicoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class OrdemServicoService {
     @Autowired
     private OrdemServicoRepository ordemServicoRepository;
@@ -25,6 +27,8 @@ public class OrdemServicoService {
         OrdemServico ordemServico = new OrdemServico(ordemServicoCadastroDTO);
         ordemServico.setCliente(cliente);
         ordemServicoRepository.save(ordemServico);
+        log.info("Ordem de Serviço cadastrada - Data: {}, Modelo: {}, Id: ({})", ordemServico.getDataServico(),
+                ordemServico.getVeiculo().getVeiculoModelo(), ordemServico.getId());
 
         return new OrdemServicoCadastroResponseDTO(ordemServico);
     }
@@ -42,18 +46,21 @@ public class OrdemServicoService {
         OrdemServico ordemServico = procurarOrdemDeServicoPorId(id);
         ordemServico.atualizarOrdemDeServico(ordemServicoAtualizacaoDTO);
         ordemServicoRepository.save(ordemServico);
+        log.info("Ordem de Serviço atualizada - Data: {}, Id: ({})", ordemServico.getDataServico(), ordemServico.getId());
     }
 
     public void ativarOrdemDeServico(Long id) {
         OrdemServico ordemServico = procurarOrdemDeServicoPorId(id);
         ordemServico.ativarOrdemDeServico();
         ordemServicoRepository.save(ordemServico);
+        log.info("Ordem de Serviço ativada - Modelo: {}, Id: ({})", ordemServico.getVeiculo().getVeiculoModelo(), ordemServico.getId());
     }
 
     public void removerOrdemDeServico(Long id) {
         OrdemServico ordemServico = procurarOrdemDeServicoPorId(id);
         ordemServico.desativarOrdemDeServico();
         ordemServicoRepository.save(ordemServico);
+        log.info("Ordem de Serviço desativada - Modelo: {}, Id: ({})", ordemServico.getVeiculo().getVeiculoModelo(), ordemServico.getId());
     }
 
     public OrdemServico procurarOrdemDeServicoPorId(Long id) {

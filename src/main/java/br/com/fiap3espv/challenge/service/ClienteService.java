@@ -5,6 +5,7 @@ import br.com.fiap3espv.challenge.exceptions.CPFValidacaoException;
 import br.com.fiap3espv.challenge.exceptions.RecursoNaoEncontradoException;
 import br.com.fiap3espv.challenge.model.Cliente;
 import br.com.fiap3espv.challenge.repository.ClienteRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+@Slf4j
 public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
@@ -21,6 +23,7 @@ public class ClienteService {
     public ClienteCadastroResponseDTO cadastrarCliente(ClienteCadastroDTO clienteCadastroDTO) {
         Cliente cliente = new Cliente(clienteCadastroDTO);
         clienteRepository.save(cliente);
+        log.info("Cliente cadastrado - Nome: {}, Id: ({})", cliente.getNome(), cliente.getId());
         return new ClienteCadastroResponseDTO(cliente);
     }
 
@@ -51,6 +54,7 @@ public class ClienteService {
 
         cliente.atualizarDados(clienteAtualizacaoDTO);
         clienteRepository.save(cliente);
+        log.info("Cliente atualizado: {} ({})", cliente.getNome(), cliente.getId());
     }
 
     public void ativarCliente(Long id) {
@@ -58,6 +62,7 @@ public class ClienteService {
 
         cliente.ativarCliente();
         clienteRepository.save(cliente);
+        log.info("Cliente ativado - Nome: {}, Id: ({})", cliente.getNome(), cliente.getId());
     }
 
     public void removerCliente(Long id) {
@@ -65,6 +70,7 @@ public class ClienteService {
 
         cliente.desativarCliente();
         clienteRepository.save(cliente);
+        log.info("Cliente desativado - Nome: {}, Id: ({})", cliente.getNome(), cliente.getId());
     }
 
     public Cliente procurarClientePorId(Long id) {

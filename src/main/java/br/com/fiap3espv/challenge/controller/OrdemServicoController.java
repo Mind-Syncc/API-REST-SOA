@@ -41,6 +41,7 @@ public class OrdemServicoController {
     }
 
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<Void> alterarOrdemServico(@RequestBody @Valid OrdemServicoAtualizacaoDTO ordemServicoAtualizacaoDTO,
                                                     @PathVariable Long id) {
         ordemServicoService.atualizarOrdemDeServico(ordemServicoAtualizacaoDTO, id);
@@ -48,6 +49,7 @@ public class OrdemServicoController {
     }
 
     @PutMapping("/ativacao/{id}")
+    @Transactional
     public ResponseEntity<Void> ativarOrdemDeServico(@PathVariable Long id) {
         ordemServicoService.ativarOrdemDeServico(id);
         return ResponseEntity.noContent().build();
