@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class UsuarioService {
@@ -34,18 +36,22 @@ public class UsuarioService {
     }
 
     public void atualizarUsuario(UsuarioAtualizacaoDTO usuarioAtualizacaoDTO, Long id) {
-        Usuario usuario = procurarClientePorId(id);
+        Usuario usuario = procurarUsuarioPorId(id);
         usuario.atualizarDados(usuarioAtualizacaoDTO);
         log.info("Usuário atualizado - Nome: {}, Role: {}, Id: ({})", usuario.getNomeUsuario(), usuario.getRole(), usuario.getId());
     }
 
     public void excluirUsuario(Long id) {
-        Usuario usuario = procurarClientePorId(id);
+        Usuario usuario = procurarUsuarioPorId(id);
         log.info("Usuário excluido - Nome: {}, Role: {}, Id: ({})", usuario.getNomeUsuario(), usuario.getRole(), usuario.getId());
         usuarioRepository.delete(usuario);
     }
 
-    private Usuario procurarClientePorId(Long id) {
+    private Usuario procurarUsuarioPorId(Long id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Usuario não encontrado"));
+    }
+
+    public Optional<Usuario> procurarUsuarioPorNomeDeUsuario(String nomeUsuario) {
+        return usuarioRepository.findByNomeUsuario(nomeUsuario);
     }
 }
