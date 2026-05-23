@@ -35,6 +35,8 @@ A API simula o recebimento de dados de pós-venda automotivo, permitindo o cadas
 
 ## Segurança
 
+> ⚠️ A implementação de segurança está disponível na branch `feature/security`.
+
 A API utiliza autenticação via **JWT (JSON Web Token)**. Para acessar os endpoints protegidos, é necessário primeiro adquirir um token pelo endpoint de login e enviá-lo no header `Authorization` no formato:
 
 ```
