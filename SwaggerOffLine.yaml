@@ -1,0 +1,834 @@
+openapi: 3.1.0
+info:
+  title: Challenge FIAP - Ford Service Share
+  description: "API REST para gerenciamento de clientes, ordens de serviço, usuários\
+    \ e autenticação"
+  contact:
+    name: |-
+      Heloísa Fleury Jardim - RM556378
+      Juan Fuentes Rufino - RM557673
+      Rickelmyn de Souza Ruescas - RM556055
+      Paulo Henrique Monteiro Golovanevsky - RM555300
+      Pedro Henrique Silva Batista - RM558137
+  version: v1
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /api/v1/usuarios/{id}:
+    put:
+      tags:
+        - usuario-controller
+      operationId: alterarUsuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UsuarioAtualizacaoDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - usuario-controller
+      operationId: excluirUsuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+  /api/v1/ordens-servicos/{id}:
+    get:
+      tags:
+        - ordem-servico-controller
+      operationId: exibirOrdemDeServicoPorId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/OrdemServicoDetalhamentoDTO"
+    put:
+      tags:
+        - ordem-servico-controller
+      operationId: alterarOrdemServico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrdemServicoAtualizacaoDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - ordem-servico-controller
+      operationId: removerUmaOrdemDeServico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+  /api/v1/ordens-servicos/ativacao/{id}:
+    put:
+      tags:
+        - ordem-servico-controller
+      operationId: ativarOrdemDeServico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+  /api/v1/clientes/{id}:
+    get:
+      tags:
+        - cliente-controller
+      operationId: exibirDetalhesCliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ClienteDetalhesDTO"
+    put:
+      tags:
+        - cliente-controller
+      operationId: atualizarDadosClientes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClienteAtualizacaoDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - cliente-controller
+      operationId: removerCliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+  /api/v1/clientes/ativacao/{id}:
+    put:
+      tags:
+        - cliente-controller
+      operationId: ativarCliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+  /api/v1/usuarios:
+    get:
+      tags:
+        - usuario-controller
+      operationId: listarUsuarios
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageUsuarioListagemDTO"
+    post:
+      tags:
+        - usuario-controller
+      operationId: cadastrarUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UsuarioCadastroDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UsuarioCadastroResponseDTO"
+  /api/v1/ordens-servicos:
+    get:
+      tags:
+        - ordem-servico-controller
+      operationId: listarOrdensDeServico
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageOrdemServicoListagemDTO"
+    post:
+      tags:
+        - ordem-servico-controller
+      operationId: cadastrarOrdemDeServico
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrdemServicoCadastroDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/OrdemServicoCadastroResponseDTO"
+  /api/v1/clientes:
+    get:
+      tags:
+        - cliente-controller
+      operationId: listarClientesAtivos
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageClienteListagemDTO"
+    post:
+      tags:
+        - cliente-controller
+      operationId: adicionarCliente
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClienteCadastroDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ClienteCadastroResponseDTO"
+  /api/v1/auth/login:
+    post:
+      tags:
+        - auth-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequestDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /health-check:
+    get:
+      tags:
+        - health-check-controller
+      operationId: testeDeIntegracao
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/v1/clientes/desativados:
+    get:
+      tags:
+        - cliente-controller
+      operationId: listarClientesNaoAtivos
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageClienteListagemDTO"
+components:
+  schemas:
+    UsuarioAtualizacaoDTO:
+      type: object
+      properties:
+        nomeUsuario:
+          type: string
+          minLength: 1
+        senha:
+          type: string
+          minLength: 1
+      required:
+        - nomeUsuario
+        - senha
+    OrdemServicoAtualizacaoDTO:
+      type: object
+      properties:
+        tipoServico:
+          type: string
+        veiculo:
+          $ref: "#/components/schemas/VeiculoDTO"
+        categoriaServico:
+          type: string
+          enum:
+            - FREIOS
+            - MOTOR
+            - SUSPENSAO
+            - TRANSMISSAO
+            - ELETRICA
+            - AR_CONDICIONADO
+            - FUNILARIA_PINTURA
+            - PNEUS
+            - REVISAO_PREVENTIVA
+            - OUTROS
+        tipoFalha:
+          type: string
+          enum:
+            - DESGASTE
+            - QUEBRA
+            - VAZAMENTO
+            - CURTO_CIRCUITO
+            - SUPERAQUECIMENTO
+            - CORROSAO
+            - RECALL
+            - REVISAO_PROGRAMADA
+            - OUTROS
+        descricaoProblema:
+          type: string
+          minLength: 1
+        valorTotal:
+          type: number
+          format: double
+      required:
+        - categoriaServico
+        - descricaoProblema
+        - tipoFalha
+        - veiculo
+    VeiculoDTO:
+      type: object
+      properties:
+        veiculoModelo:
+          type: string
+          minLength: 1
+        veiculoAno:
+          type: integer
+          format: int32
+        veiculoKm:
+          type: integer
+          format: int32
+      required:
+        - veiculoAno
+        - veiculoKm
+        - veiculoModelo
+    ClienteAtualizacaoDTO:
+      type: object
+      properties:
+        nome:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        email:
+          type: string
+          format: email
+        cidade:
+          type: string
+        estado:
+          type: string
+    UsuarioCadastroDTO:
+      type: object
+      properties:
+        nomeUsuario:
+          type: string
+          minLength: 1
+        senha:
+          type: string
+          minLength: 1
+        role:
+          type: string
+          enum:
+            - FUNCIONARIO
+      required:
+        - nomeUsuario
+        - role
+        - senha
+    UsuarioCadastroResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nomeUsuario:
+          type: string
+        role:
+          type: string
+          enum:
+            - FUNCIONARIO
+    OrdemServicoCadastroDTO:
+      type: object
+      properties:
+        clienteId:
+          type: integer
+          format: int64
+        concessionariaId:
+          type: string
+        dataServico:
+          type: string
+          format: date
+        tipoServico:
+          type: string
+        veiculo:
+          $ref: "#/components/schemas/VeiculoDTO"
+        categoriaServico:
+          type: string
+          enum:
+            - FREIOS
+            - MOTOR
+            - SUSPENSAO
+            - TRANSMISSAO
+            - ELETRICA
+            - AR_CONDICIONADO
+            - FUNILARIA_PINTURA
+            - PNEUS
+            - REVISAO_PREVENTIVA
+            - OUTROS
+        tipoFalha:
+          type: string
+          enum:
+            - DESGASTE
+            - QUEBRA
+            - VAZAMENTO
+            - CURTO_CIRCUITO
+            - SUPERAQUECIMENTO
+            - CORROSAO
+            - RECALL
+            - REVISAO_PROGRAMADA
+            - OUTROS
+        descricaoProblema:
+          type: string
+        valorTotal:
+          type: number
+          format: double
+      required:
+        - clienteId
+        - concessionariaId
+        - veiculo
+    OrdemServicoCadastroResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nomeCliente:
+          type: string
+        concessionariaId:
+          type: string
+        dataServico:
+          type: string
+          format: date
+        veiculo:
+          $ref: "#/components/schemas/VeiculoDTO"
+        descricaoProblema:
+          type: string
+    ClienteCadastroDTO:
+      type: object
+      properties:
+        nome:
+          type: string
+          minLength: 1
+        cpf:
+          type: string
+          minLength: 1
+          pattern: "^\\d{11}$"
+        telefone:
+          type: string
+        email:
+          type: string
+          format: email
+          minLength: 1
+        cidade:
+          type: string
+          minLength: 1
+        estado:
+          type: string
+          minLength: 1
+      required:
+        - cidade
+        - cpf
+        - email
+        - estado
+        - nome
+    ClienteCadastroResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        email:
+          type: string
+        cidade:
+          type: string
+        estado:
+          type: string
+        ativo:
+          type: boolean
+    LoginRequestDTO:
+      type: object
+      properties:
+        nomeUsuario:
+          type: string
+          minLength: 1
+        senha:
+          type: string
+          minLength: 1
+      required:
+        - nomeUsuario
+        - senha
+    Pageable:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 0
+        size:
+          type: integer
+          format: int32
+          minimum: 1
+        sort:
+          type: array
+          items:
+            type: string
+    PageUsuarioListagemDTO:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/UsuarioListagemDTO"
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: "#/components/schemas/SortObject"
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        numberOfElements:
+          type: integer
+          format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
+        empty:
+          type: boolean
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        sort:
+          $ref: "#/components/schemas/SortObject"
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+    SortObject:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+    UsuarioListagemDTO:
+      type: object
+      properties:
+        nomeUsuario:
+          type: string
+        role:
+          type: string
+          enum:
+            - FUNCIONARIO
+    OrdemServicoListagemDTO:
+      type: object
+      properties:
+        idCliente:
+          type: integer
+          format: int64
+        concessionariaId:
+          type: string
+        dataServico:
+          type: string
+          format: date
+        veiculo:
+          $ref: "#/components/schemas/VeiculoDTO"
+        descricaoProblema:
+          type: string
+        valorTotal:
+          type: number
+          format: double
+    PageOrdemServicoListagemDTO:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrdemServicoListagemDTO"
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: "#/components/schemas/SortObject"
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        numberOfElements:
+          type: integer
+          format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
+        empty:
+          type: boolean
+    OrdemServicoDetalhamentoDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        clienteId:
+          type: integer
+          format: int64
+        concessionariaId:
+          type: string
+        dataServico:
+          type: string
+          format: date
+        tipoServico:
+          type: string
+        veiculo:
+          $ref: "#/components/schemas/VeiculoDTO"
+        categoriaServico:
+          type: string
+          enum:
+            - FREIOS
+            - MOTOR
+            - SUSPENSAO
+            - TRANSMISSAO
+            - ELETRICA
+            - AR_CONDICIONADO
+            - FUNILARIA_PINTURA
+            - PNEUS
+            - REVISAO_PREVENTIVA
+            - OUTROS
+        tipoFalha:
+          type: string
+          enum:
+            - DESGASTE
+            - QUEBRA
+            - VAZAMENTO
+            - CURTO_CIRCUITO
+            - SUPERAQUECIMENTO
+            - CORROSAO
+            - RECALL
+            - REVISAO_PROGRAMADA
+            - OUTROS
+        descricaoProblema:
+          type: string
+        valorTotal:
+          type: number
+          format: double
+        ativo:
+          type: boolean
+    ClienteListagemDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        email:
+          type: string
+    PageClienteListagemDTO:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClienteListagemDTO"
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: "#/components/schemas/SortObject"
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        numberOfElements:
+          type: integer
+          format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
+        empty:
+          type: boolean
+    ClienteDetalhesDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        email:
+          type: string
+        cidade:
+          type: string
+        estado:
+          type: string
+        ativo:
+          type: boolean
